@@ -1,0 +1,77 @@
+Projekt biznesowy: 
+model do predykcji odejść klientów (customer churn) dla serwisów bazujących na subskrybcji.
+
+_________________________________________________________________________
+Cel: skuteczna predykcja, czy klient zrezygnuje z subskrybcji w serwisie.
+Zrozumienie głównych czynników wpływających na odejścia klientów.
+
+________
+dataset:
+	https://archive.ics.uci.edu/dataset/563/iranian+churn+dataset
+
+	Są to dane z bazy irańskiej firmy telekomunikacyjnej zebrane w okresie czasowym dwunastu miesięcy. 
+	Ma 13 cech i 3 150 obserwacji. Nie ma brakujących wartości.
+	cechy: 
+		nieudane połączenia (Integer), 
+		częstotliwość wysyłania SMS-ów (Integer), 
+		czy złożono skargi (Binary), 
+		liczba odrębnych połączeń (Integer), 
+		długość abonamentu (Integer), 
+		grupa wiekowa (Integer), 
+		wysokość opłaty (Integer), 
+		rodzaj usługi (Integer), 
+		sekundy użytkowania (Integer), 
+		status (Binary), 
+		częstotliwość użytkowania (Integer),
+		wartość dla klienta (Continuous)
+
+	Etykieta: 
+		czy zrezygnował z subskrybcji (Binary)
+
+	Wszystkie atrybuty z wyjątkiem rezygnacji atrybutów to zagregowane dane z pierwszych 9 miesięcy. 
+	Etykiety rezygnacji to stan klientów na koniec 12 miesięcy. 
+
+__________________________
+wstępna propozycja modelu:
+
+enhanced tree model
+
+________________________
+Etapy pracy projektowej:
+
+1. Czyszczenie danych (może nie będzie nic do czyszczenia):
+	Usuwanie wartości odstających i korekta błędów.
+
+2. Eksploracja danych:
+	Analiza danych w celu zrozumienia ich charakterystyki, rozkładu i zależności między zmiennymi, potencjalnych problemów.
+	Wnioski wyciągnięte na tym etapie są kluczowe dla dalszego wyboru modelu i customizacji modelu.
+
+	2a. Czy mamy dysbalans klas?
+
+	2b. Podstawowa analiza statystyczna
+		- Wygenerowanie i opisanie statystyk dla każdej z cech: średnia, mediana, odchylenie standardowe, kwartylw, min i max
+
+		-Wygenerowanie i wizualizacja rozkładów zmiennych: histogramy i wykresy pudełkowe
+
+	2c. Dalsza wizualizacja: Czy zmienne są zależne czy niezależne?
+		- Zobrazowanie zależności między parami zmiennych (scatter plots)
+			
+		-  Mapy ciepła korelacji
+		Jakie są to zależności (liniowe czy nieliniowe)?
+		Jak zmienne niezależne wpływają na zmienne zależne?
+
+	2d. Analiza zmiennych kategorycznych
+		- agregacja danych względem zmiennych kategorycznych, aby zrozumieć różnice między grupami
+
+	2e. Czy dane mają określoną tendencję czasową (sezonowość)?
+
+	
+3. Przygotowanie danych do modelowania
+	3a. Potencjalne normalizacja lub standaryzacja
+	3b. Zaimplementowanie alternatywnych metod radzenia sobie z potencjalnyh dysbalansem klas (oversampling, undersampling)
+
+4. Wypróbowanie prostych modeli w celu lepszego zrozumienia danych:
+	regresja logistyczna, drzewo decyzyjne, KNN, Naiwny Bayes, Maszyny Wektorów Nośnych (SVM)
+
+	Użyjemy tych modeli jako punktu odniesienia dla porównania z bardziej złożonymi modelami.
+	Na podstawie wniosków z nich wyciągniętych będziemy stopniowo zwiększać złożoność modeli, aby poprawić dokładność predykcji.
