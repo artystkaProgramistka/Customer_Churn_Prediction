@@ -2,31 +2,39 @@ Projekt biznesowy:
 model do predykcji odejść klientów (customer churn) dla serwisów bazujących na subskrybcji.
 
 _________________________________________________________________________
-Cel: skuteczna predykcja, czy klient zrezygnuje z subskrybcji w serwisie.
+Cel: skuteczna predykcja, czy klient (w ciągu najbliższych trzech miesięcy) zrezygnuje z subskrybcji w serwisie.
 Zrozumienie głównych czynników wpływających na odejścia klientów.
 
 ________
 dataset:
 	https://archive.ics.uci.edu/dataset/563/iranian+churn+dataset
 
+	udostępniony przez University of California, Irvine
+	
+	LICENSE
+		Creative Commons Attribution 4.0 International (CC BY 4.0) license
+
+	Allows for sharing and adaptation of the datasets for any purpose, provided that the appropriate credit is given.
+
 	Są to dane z bazy irańskiej firmy telekomunikacyjnej zebrane w okresie czasowym dwunastu miesięcy. 
 	Ma 13 cech i 3 150 obserwacji. Nie ma brakujących wartości.
 	cechy: 
-		nieudane połączenia (Integer), 
-		częstotliwość wysyłania SMS-ów (Integer), 
-		czy złożono skargi (Binary), 
-		liczba odrębnych połączeń (Integer), 
-		długość abonamentu (Integer), 
-		grupa wiekowa (Integer), 
-		wysokość opłaty (Integer), 
-		rodzaj usługi (Integer), 
-		sekundy użytkowania (Integer), 
-		status (Binary), 
-		częstotliwość użytkowania (Integer),
-		wartość dla klienta (Continuous)
+		Call Failure - Nieudane Połączenia (Integer), 
+		Frequency of SMS - Częstotliwość wysyłania SMS-ów (Integer), 
+		Complaints - Czy Złożono Skargi (Binary), 
+		Distinct Called Numbers - Liczba Odrębnych Połączeń (Integer), 
+		Subscription Length - Długość Abonamentu (Integer), 
+		Age - Wiek (Integer)
+		Age Group - Grupa Wiekowa (Integer), 
+		Charge Amount - Wysokość Opłaty (Integer), 
+		Tariff Plan - Rodzaj Usługi (Integer), 
+		Seconds of Use - Sekundy Użytkowania (Integer), 
+		Status (Binary), 
+		Frequency of Use - Częstotliwość Użytkowania (Integer),
+		Customer Value - Wartość dla Klienta (Continuous)
 
 	Etykieta: 
-		czy zrezygnował z subskrybcji (Binary)
+	Churn - Czy Zrezygnował z Subskrybcji (Binary)
 
 	Wszystkie atrybuty z wyjątkiem rezygnacji atrybutów to zagregowane dane z pierwszych 9 miesięcy. 
 	Etykiety rezygnacji to stan klientów na koniec 12 miesięcy. 
