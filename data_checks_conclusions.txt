@@ -1,0 +1,6 @@
+Outliers larger than 1.5 IQR have been found and saved into outliers.csv file. The number of > 1.5 IQR outliers is 2 692.
+
+Outliers larger than 3 IQR have been found and saved into extreme_outliers.csv file. The number of > 3 IQR outliers is 714.
+
+Duplicate rows have ben found and the number of them is 300.
+
