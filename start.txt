@@ -47,8 +47,14 @@ enhanced tree model
 ________________________
 Etapy pracy projektowej:
 
-1. Czyszczenie danych (może nie będzie nic do czyszczenia):
-	Usuwanie wartości odstających i korekta błędów.
+1. Czyszczenie danych:
+	sprawdzenie konsystencji typpów danych w kolumnach
+	upewnienie się, że nie ma brakujących wartości
+	znalezienie duplikatów
+	znalezienie outlier'ów > 1,5 iqr i > 3 iqr
+	sprawdzenie konsystencji danych w kolumnach poątem zakresu wartości
+
+	Usuwanie wartości odstających i duplikatów.
 
 2. Eksploracja danych:
 	Analiza danych w celu zrozumienia ich charakterystyki, rozkładu i zależności między zmiennymi, potencjalnych problemów.
