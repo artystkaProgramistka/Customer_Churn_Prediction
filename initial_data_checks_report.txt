@@ -1,0 +1,53 @@
+What have been done:
+
+read_and_preprocess data():
+	- reads the data from customer_churn.csv
+	- converts the 'Tariff Plan' and 'Status' columns into boolean according to their binary interpretation {1: True, 2: False}
+	- converts 'Churn' label column into boolean {1: True, 0: False}
+	- returns data, X, y
+
+check_data_type_consistency(df):
+	checks for consistency of data types within each column
+
+check_for_missing_values(df):
+	checks for missing values within each column
+
+save_descriptive_statistics(df)
+	- saves statictical information about each column into descriptive_stats.csv
+	The statistics are:
+	count, mean, Q1, Q2, Q3, max
+	
+check_duplicates_and_save(df)
+	- looks for duplicates and saves them into duplicates.csv
+	- prints the number of duplicates
+
+mark_and_save_iqr_outliers_full_rows(df, mild_threshold=1.5, extreme_threshold=3)
+	- looks for outliers within numerical columns. Uses IQR as the metric. Saves whole rows marked as outliers into csv files. Outliers > 1.5 IQR get saved into outliers.csv and the outliers > 3 IQR get saved into extreme_outliers.csv, such that outliers consist of all of the extreme_outliers but not all od the outliers are present inside the extreme_outliers file.
+	- prints the number of found outliers
+
+range_checks(df)
+	-checks whether all of the values within the 'Change Amount' and 'Age Group' match the ranges specified in the data description:
+	Charge Amount: Ordinal attribute (0: lowest amount, 9: highest amount)
+	Age Group: ordinal attribute (1: younger age, 5: older age)
+
+	'Call Failure': (0, 50)
+	'Subscription Length': (1, 100), Assuming the maximum subscription length of 100 months	
+	'Seconds of Use': (0, 100000), Assuming a practical upper limit of seconds of use
+        'Frequency of use': (0, 1000), Assuming a user won't make more than 1000 calls
+        'Frequency of SMS': (0, 1000), Assuming a user won't send more than 1000 SMS
+        'Distinct Called Numbers': (0, 500), Assuming a user won't call more than 500 distinct numbers
+
+	- saves outliers into range_outliers.csv
+	- prints the number of outliers found wwithin each of the two columns
+	
+
+
+Duplicate rows found: 465
+
+It is not certain whether would it be the most appropriate to leave or delete them as they might not have been a result an input error. We should perform checks for the influence of them being deleted on the model's performance.
+
+989 mild outliers (excluding extreme) and 663 extreme outliers were found within the numerical columns.
+
+There are no inconsistensies within data types inside columns.
+
+There are no missing values.

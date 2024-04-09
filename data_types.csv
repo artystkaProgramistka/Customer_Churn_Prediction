@@ -1,0 +1,15 @@
+Column,DataType
+Call  Failure,int64
+Complains,int64
+Subscription  Length,int64
+Charge  Amount,int64
+Seconds of Use,int64
+Frequency of use,int64
+Frequency of SMS,int64
+Distinct Called Numbers,int64
+Age Group,int64
+Tariff Plan,bool
+Status,bool
+Age,int64
+Customer Value,int64
+Churn,bool
