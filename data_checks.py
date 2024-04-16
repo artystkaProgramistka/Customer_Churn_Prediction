@@ -1,29 +1,5 @@
 import pandas as pd
-import numpy as np
-
-
-def read_and_preprocess_data():
-    # Load the data into a pandas dataframe
-    data = pd.read_csv("customer_churn.csv")
-
-    # Preprocessing
-    # Ensure integer columns are treated as integers, excluding specific binary columns
-    integer_columns = [column for column in data.columns if
-                       column not in ['Status', 'Complains', 'Tariff Plan', 'Churn']]
-    data[integer_columns] = data[integer_columns].astype('int')
-
-    # Convert 'Tariff Plan' and 'Status' to boolean according to their binary interpretation
-    data['Tariff Plan'] = data['Tariff Plan'].map({1: True, 2: False}).astype('bool')
-    data['Status'] = data['Status'].map({1: True, 2: False}).astype('bool')
-
-    # Convert 'Churn' to boolean: 1 as True (churn) and 0 as False (non-churn)
-    data['Churn'] = data['Churn'].map({1: True, 0: False}).astype('bool')
-
-    # Separate features (X) and label (y)
-    X = data.drop(['Churn'], axis=1)
-    y = data['Churn']
-
-    return data, X, y
+from read_and_preprocess_data import read_and_preprocess_data
 
 def check_data_type_consistency(df):
     inconsistent_data = {}
@@ -68,13 +44,6 @@ def save_data_types(df):
     data_types_path = 'data_types.csv'
     data_types_df.to_csv(data_types_path, index=False)
     print(f"Data types saved to '{data_types_path}'.")
-
-def save_descriptive_statistics(df):
-    try:
-        df.describe().to_csv('descriptive_stats.csv')
-        print("Descriptive statistics saved to 'descriptive_stats.csv'.")
-    except Exception as e:
-        print(f"An error occurred while saving descriptive statistics: {e}")
 
 def check_duplicates_and_save(df):
     # Identify all duplicates (don't mark the first occurrence as a duplicate)
@@ -162,8 +131,7 @@ def range_checks_and_save_outliers(df):
                 print(f"No outliers found in column '{column}'.")
 
 def perform_data_checks(df):
-    save_data_types(df)
-    save_descriptive_statistics(df)
+    save_data_types(df
     check_duplicates_and_save(df)
     mark_and_save_iqr_outliers(df)
     range_checks_and_save_outliers(df)
