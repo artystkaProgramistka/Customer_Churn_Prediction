@@ -20,22 +20,26 @@ from read_and_preprocess_data import read_and_preprocess_data
 
 def generate_and_save_plots(df):
     """
-    Generates histograms and box plots for all numerical columns in the DataFrame.
+    Generates histograms and box plots for all numerical columns and histograms for binary columns in the DataFrame.
     Each type of plot is saved as a separate PNG file.
     """
-    # Filter for numeric columns in the DataFrame
-    numeric_cols = df.select_dtypes(include=['number']).columns
+    # Convert boolean columns to integers for histogram purposes
+    bool_cols = df.select_dtypes(include=['bool']).columns
+    for col in bool_cols:
+        df[col] = df[col].astype(int)  # Convert bool to int
 
-    # Determine the number of rows needed for subplots based on the number of numeric columns
-    # Arrange plots in a 3-column format for both types of plots
-    num_plots = len(numeric_cols)
-    nrows = (num_plots // 3) + (1 if num_plots % 3 else 0)
+    # Filter for numeric columns in the DataFrame (including converted boolean columns)
+    cols = df.select_dtypes(include=['number']).columns
 
-    # Create histograms
-    fig_hist, axs_hist = plt.subplots(nrows=nrows, ncols=3, figsize=(15, 5 * nrows))
+    # Determine the number of rows needed for subplots based on the number of columns
+    num_plots_hist = len(cols)
+    nrows_hist = (num_plots_hist // 3) + (1 if num_plots_hist % 3 else 0)
+
+    # Create histograms for all numeric (including converted boolean) columns
+    fig_hist, axs_hist = plt.subplots(nrows=nrows_hist, ncols=3, figsize=(15, 5 * nrows_hist))
     axs_hist = axs_hist.flatten()  # Flatten to 1D array for easy iteration
 
-    for i, col in enumerate(numeric_cols):
+    for i, col in enumerate(cols):
         df[col].hist(ax=axs_hist[i], bins=20)
         axs_hist[i].set_title(f'Histogram of {col}')
         axs_hist[i].set_xlabel('Value')
@@ -47,14 +51,17 @@ def generate_and_save_plots(df):
 
     plt.tight_layout()
     plt.savefig('histograms.png')
-    plt.close(fig_hist)  # Close the histogram plotting window
+    plt.close(fig_hist)
     print("Histograms saved to 'histograms.png'.")
 
-    # Create box plots
-    fig_box, axs_box = plt.subplots(nrows=nrows, ncols=3, figsize=(15, 5 * nrows))
+    # Create box plots for all numeric columns
+    num_plots_box = len(cols)
+    nrows_box = (num_plots_box // 3) + (1 if num_plots_box % 3 else 0)
+
+    fig_box, axs_box = plt.subplots(nrows=nrows_box, ncols=3, figsize=(15, 5 * nrows_box))
     axs_box = axs_box.flatten()  # Flatten to 1D array for easy iteration
 
-    for i, col in enumerate(numeric_cols):
+    for i, col in enumerate(cols):
         df.boxplot(column=[col], ax=axs_box[i])
         axs_box[i].set_title(f'Box Plot of {col}')
 
@@ -64,19 +71,15 @@ def generate_and_save_plots(df):
 
     plt.tight_layout()
     plt.savefig('box_plots.png')
-    plt.close(fig_box)  # Close the box plot plotting window
+    plt.close(fig_box)
     print("Box plots saved to 'box_plots.png'.")
 
+
 # Example usage
 if __name__ == "__main__":
-    data, _, __ = read_and_preprocess_data()  # Load your data
+    data, _, __ = read_and_preprocess_data()  # Load data
+    print(data.dtypes)
     generate_and_save_plots(data)  # Generate and save plots
-
-
-# Example usage
-if __name__ == "__main__":
-    data, _, __ = read_and_preprocess_data()  # Load your data
-    generate_and_save_plots(data)  # Generate and save histograms
 
 
 
