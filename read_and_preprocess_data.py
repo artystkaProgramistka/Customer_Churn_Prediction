@@ -4,6 +4,8 @@ def read_and_preprocess_data():
     # Load the data into a pandas dataframe
     data = pd.read_csv("customer_churn.csv")
 
+    data.drop('Age', axis=1, inplace=True)
+
     # Preprocessing
     # Ensure integer columns are treated as integers, excluding specific binary columns
     integer_columns = [column for column in data.columns if
@@ -13,6 +15,7 @@ def read_and_preprocess_data():
     # Convert 'Tariff Plan' and 'Status' to boolean according to their binary interpretation
     data['Tariff Plan'] = data['Tariff Plan'].map({1: True, 2: False}).astype('bool')
     data['Status'] = data['Status'].map({1: True, 2: False}).astype('bool')
+    data['Complains'] = data['Complains'].map({1: True, 0 : False}).astype('bool')
 
     # Convert 'Churn' to boolean: 1 as True (churn) and 0 as False (non-churn)
     data['Churn'] = data['Churn'].map({1: True, 0: False}).astype('bool')

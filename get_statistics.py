@@ -1,6 +1,7 @@
 from read_and_preprocess_data import read_and_preprocess_data
 import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
 
 def save_descriptive_statistics(df):
     try:
@@ -74,6 +75,13 @@ def generate_and_save_plots(df):
     plt.close(fig_box)
     print("Box plots saved to 'box_plots.png'.")
 
+    # Generate and save the correlation matrix
+    corr_matrix = df[cols].corr()
+    plt.figure(figsize=(10,8))
+    sns.heatmap(corr_matrix, annot=True, fmt=".2f", cmap="coolwarm", cbar_kws={'label': 'Correlation coefficient'})
+    plt.savefig('correlation_matrix.png')
+    plt.close()
+    print("Correlation matrix saved to 'correlation_matrix.png'.")
 
 # Example usage
 if __name__ == "__main__":
