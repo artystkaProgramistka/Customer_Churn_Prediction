@@ -4,16 +4,16 @@ def read_and_preprocess_data():
     # Load the data into a pandas dataframe
     data = pd.read_csv("customer_churn.csv")
 
-    data.drop('Age', axis=1, inplace=True)
+    # Delete the 'Age', 'Tariff Plan', and 'Charge Amount' columns from the dataframe
+    data.drop(['Age', ], axis=1, inplace=True)
 
     # Preprocessing
     # Ensure integer columns are treated as integers, excluding specific binary columns
     integer_columns = [column for column in data.columns if
-                       column not in ['Status', 'Complains', 'Tariff Plan', 'Churn']]
+                       column not in ['Status', 'Complains', 'Churn']]
     data[integer_columns] = data[integer_columns].astype('int')
 
-    # Convert 'Tariff Plan' and 'Status' to boolean according to their binary interpretation
-    data['Tariff Plan'] = data['Tariff Plan'].map({1: True, 2: False}).astype('bool')
+    # Convert 'Status' to boolean according to their binary interpretation
     data['Status'] = data['Status'].map({1: True, 2: False}).astype('bool')
     data['Complains'] = data['Complains'].map({1: True, 0 : False}).astype('bool')
 

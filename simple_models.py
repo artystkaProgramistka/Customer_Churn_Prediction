@@ -27,6 +27,8 @@ models = [
     (KNeighborsClassifier(n_neighbors=5), 'KNN')  # KNN with 5 neighbors
 ]
 
+accuracies = []
+
 for i, (model, title) in enumerate(models):
     ax = axes[i//3, i%3]  # Determine the position on the grid
     model.fit(X_train, y_train)
@@ -37,9 +39,22 @@ for i, (model, title) in enumerate(models):
     ax.set_xlabel('Predicted labels')
     ax.set_ylabel('True labels')
     accuracy = accuracy_score(y_test, y_pred)
+    accuracies.append(accuracy)
     print(f"{title} Accuracy: {accuracy}")
     print(f"{title} Classification Report:\n{classification_report(y_test, y_pred)}")
 
 # Adjust layout
 plt.tight_layout(rect=[0, 0.03, 1, 0.95])
 plt.savefig('all_confusion_matrices.png', format='png', dpi=300)
+
+# Create a bar plot for accuracies
+plt.figure(figsize=(10,6))
+model_names = [name for _, name in models]
+plt.bar(model_names, accuracies, color='skyblue')
+plt.xlabel('Model')
+plt.ylabel('Accuracy')
+plt.title('Comparison of Model Accuracies')
+plt.ylim(0, 1)
+for i, v in enumerate(accuracies):
+    plt.text(i, v + 0.02, f"{v:.2f}", ha='center', va='bottom')
+plt.savefig('model_accuracies.png', format='png', dpi=300)

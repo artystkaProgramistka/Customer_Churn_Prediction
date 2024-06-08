@@ -2,6 +2,8 @@ from read_and_preprocess_data import read_and_preprocess_data
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
 
 def save_descriptive_statistics(df):
     try:
@@ -83,11 +85,40 @@ def generate_and_save_plots(df):
     plt.close()
     print("Correlation matrix saved to 'correlation_matrix.png'.")
 
+def perform_pca_analysis(df):
+    # Convert boolean columns to integers for histogram purposes
+    bool_cols = df.select_dtypes(include=['bool']).columns
+    for col in bool_cols:
+        df[col] = df[col].astype(int)  # Convert bool to int
+
+    # Filter for numeric columns in the DataFrame (including converted boolean columns)
+    cols = df.select_dtypes(include=['number']).columns
+    data_numeric = df[cols]
+
+    # Standardizing the data to have a mean of 0 and a variance of 1
+    scaler = StandardScaler()
+    data_scaled = scaler.fit_transform(data_numeric)
+
+    pca = PCA()
+    pca.fit(data_scaled)
+
+    plt.figure(figsize=(8,6))
+    plt.plot(range(1, len(pca.explained_variance_ratio_) + 1), pca.explained_variance_ratio_.cumsum(), marker='o', linestyle='--')
+    plt.title('Explained Variance by Comoponents')
+    plt.xlabel('Number of Conponents')
+    plt.ylabel('Cumulative Explained Variance')
+    plt.grid(True)
+    plt.savefig('pca_explained_variance.png')
+    plt.close()
+    print("PCA analysis and screen plot saved to 'pca_explained_variance.png'.")
+    return pca
+
 # Example usage
 if __name__ == "__main__":
     data, _, __ = read_and_preprocess_data()  # Load data
     print(data.dtypes)
     generate_and_save_plots(data)  # Generate and save plots
+    pca_model = perform_pca_analysis(data)
 
 
 

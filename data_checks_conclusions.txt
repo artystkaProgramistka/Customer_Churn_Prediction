@@ -4,3 +4,4 @@ Outliers larger than 3 IQR have been found and saved into extreme_outliers.csv f
 
 Duplicate rows have ben found and the number of them is 300.
 
+Tariff Plan and Charge Amount have no influence on churn prediction and should not be considered in calculation. 
